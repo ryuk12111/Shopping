@@ -1,45 +1,43 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import { useSelector } from 'react-redux';
 
-import { selectCartTotal } from '../../store/cart/cart.selector';
-import { selectCurrentUser } from '../../store/user/user.selector';
+import { UserContext } from '../../context/user.context';
+import { CartContext } from '../../context/cart.context';
 
 import { FormContainer } from './payment-form.styles';
 import { BUTTON_TYPE_CLASSES } from '../button/button.component';
-
 import { PaymentButton, PaymentFormContainer } from './payment-form.styles';
 
 const PaymentForm = () => {
   const stripe = useStripe();
   const elements = useElements();
-  const amount = useSelector(selectCartTotal);
-  const currentUser = useSelector(selectCurrentUser);
+  const { cartTotal } = useContext(CartContext);
+  const { currentUser } = useContext(UserContext);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
   const paymentHandler = async (e) => {
     e.preventDefault();
-    if (!stripe || !elements) {
-      return;
-    }
+
+    if (!stripe || !elements) return;
+
     setIsProcessingPayment(true);
+
     const response = await fetch('/.netlify/functions/create-payment-intent', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ amount: amount * 100 }),
-    }).then((res) => {
-      return res.json();
+      body: JSON.stringify({ amount: cartTotal * 100 }),
     });
 
-    const clientSecret = response.paymentIntent.client_secret;
+    const data = await response.json();
+    const clientSecret = data.paymentIntent.client_secret;
 
     const paymentResult = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: elements.getElement(CardElement),
         billing_details: {
-          name: currentUser ? currentUser.displayName : 'Yihua Zhang',
+          name: currentUser ? currentUser.displayName : 'Guest',
         },
       },
     });
@@ -48,10 +46,8 @@ const PaymentForm = () => {
 
     if (paymentResult.error) {
       alert(paymentResult.error.message);
-    } else {
-      if (paymentResult.paymentIntent.status === 'succeeded') {
-        alert('Payment Successful!');
-      }
+    } else if (paymentResult.paymentIntent.status === 'succeeded') {
+      alert('Payment Successful!');
     }
   };
 
@@ -70,4 +66,5 @@ const PaymentForm = () => {
     </PaymentFormContainer>
   );
 };
+
 export default PaymentForm;
