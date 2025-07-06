@@ -22,7 +22,7 @@ const Navigation = () => {
 
   return (
     <Fragment>
-      <nav className="bg-pink top-0 z-50">
+      <nav className="bg-pink sticky top-0 z-50">
         <div className="container mx-auto px-4 flex items-center justify-between py-4">
           {/* Logo */}
           <Link to="/" className="flex items-center">
