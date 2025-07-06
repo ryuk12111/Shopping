@@ -10,7 +10,7 @@ const Products = () => {
 
 useEffect(() => {
   if (categoriesMap) {
-    const productIdsToSelect = [1, 3, 7,19,12]; // example IDs from any category
+    const productIdsToSelect = [1, 2, 7]; // example IDs from any category
     let combinedProducts = [];
 
     Object.values(categoriesMap).forEach(productsArray => {
