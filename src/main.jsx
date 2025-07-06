@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import { UserProvider } from './context/user.context';
 import { CartProvider } from './context/cart.context';
-
+import { CategoriesProvider } from './context/categories.context';
 import {Elements} from '@stripe/react-stripe-js';
 import { stripePromise } from './components/utils/stripe/stripe.utils';
 import "slick-carousel/slick/slick.css";
@@ -17,9 +17,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <UserProvider>
           <CartProvider>
+            <CategoriesProvider>
             <Elements stripe={stripePromise}>
             <App />
             </Elements>
+            </CategoriesProvider>
           </CartProvider>
       </UserProvider>
     </BrowserRouter>

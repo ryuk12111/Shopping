@@ -1,90 +1,90 @@
-import React from "react";
-import Img1 from "./shirt.png";
-import Img2 from "./shirt2.png";
-import Img3 from "./shirt3.png";
-import { FaStar } from "react-icons/fa";
-
-const ProductsData = [
-  {
-    id: 1,
-    img: Img1,
-    title: "Casual Wear",
-    description:
-      "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  },
-  {
-    id: 2,
-    img: Img2,
-    title: "Printed shirt",
-    description:
-      "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  },
-  {
-    id: 3,
-    img: Img3,
-    title: "Women shirt",
-    description:
-      "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  },
-];
+import React, { useEffect, useState, useContext } from "react";
+import { FaStar } from "react-icons/fa6";
+import { CategoriesContext } from "../../../context/categories.context";
+import { CartContext } from "../../../context/cart.context";
 
 const TopProducts = ({ handleOrderPopup }) => {
+  const { categoriesMap } = useContext(CategoriesContext);
+  const { addItemToCart } = useContext(CartContext);
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const firstCategory = Object.keys(categoriesMap)[0];
+    if (firstCategory) {
+      setProducts(categoriesMap[firstCategory].slice(0, 5)); // top 5 products from first category
+    }
+  }, [categoriesMap]);
+
+  const handleOrderNow = (product) => {
+    addItemToCart(product);
+    if (handleOrderPopup) handleOrderPopup(product);
+  };
+
   return (
-    <div>
-      <div className="container">
+    <div className="py-16 ">
+      <div className="container mx-auto px-6">
         {/* Header section */}
-        <div className="text-left mb-24">
-          <p data-aos="fade-up" className="text-sm text-primary">
+
+
+        <div className="text-center mb-10 max-w-[600px] mx-auto">
+          <p data-aos="fade-up" className="text-sm text-primary font-semibold">
             Top Rated Products for you
           </p>
-          <h1 data-aos="fade-up" className="text-3xl font-bold">
+          <h1 data-aos="fade-up" className="text-3xl font-extrabold tracking-wide">
             Best Products
           </h1>
-          <p data-aos="fade-up" className="text-xs text-gray-400">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sit
-            asperiores modi Sit asperiores modi
+          <p data-aos="fade-up" className="text-xs text-gray-500 mt-2">
+            Discover our selection of top-selling products carefully curated for you.
           </p>
         </div>
 
-        {/* Body section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-20 md:gap-5 place-items-center">
-          {ProductsData.map((data) => (
-            <div
-              key={data.id}
-              data-aos="zoom-in"
-              className="rounded-2xl bg-white dark:bg-gray-800 hover:bg-black/80 dark:hover:bg-primary hover:text-white relative shadow-xl duration-300 group max-w-[300px]"
-            >
-              {/* image section */}
-              <div className="h-[100px]">
-                <img
-                  src={data.img}
-                  alt=""
-                  className="max-w-[140px] block mx-auto transform -translate-y-20 group-hover:scale-105 duration-300 drop-shadow-md"
-                />
-              </div>
-
-              {/* details section */}
-              <div className="p-4 text-center">
-                {/* star rating */}
-                <div className="w-full flex items-center justify-center gap-1">
-                  <FaStar className="text-yellow-500" />
-                  <FaStar className="text-yellow-500" />
-                  <FaStar className="text-yellow-500" />
-                  <FaStar className="text-yellow-500" />
+        {/* Products Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 place-items-center">
+          {products.length ? (
+            products.map((data, idx) => (
+              <div
+                key={data.id}
+                data-aos="zoom-in"
+                className="relative bg-white rounded-3xl shadow-2xl hover:shadow-3xl transition-shadow duration-400 ease-in-out max-w-xs w-full group cursor-pointer overflow-hidden"
+              >
+                {/* Image section */}
+                <div className="flex justify-center items-center overflow-visible pt-6">
+                  <img
+                    src={data.imageUrl}
+                    alt={data.name}
+                    className="max-w-[140px] max-h-[160px] object-contain transition-transform duration-500 group-hover:scale-110 drop-shadow-xl"
+                  />
                 </div>
-                <h1 className="text-xl font-bold">{data.title}</h1>
-                <p className="text-gray-500 group-hover:text-white duration-300 text-sm line-clamp-2">
-                  {data.description}
-                </p>
-                <button
-                  className="bg-primary hover:scale-105 duration-300 text-white py-1 px-4 rounded-full mt-4 group-hover:bg-white group-hover:text-primary"
-                  onClick={handleOrderPopup}
-                >
-                  Order Now
-                </button>
+
+                {/* Details section */}
+                <div className="p-6 text-center">
+                  {/* Star rating */}
+                  <div className="flex justify-center gap-1 mb-3 text-yellow-400">
+                    {[...Array(5)].map((_, i) => (
+                      <FaStar key={i} />
+                    ))}
+                  </div>
+
+                  <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+                    {data.name}
+                  </h2>
+
+                  <p className="text-gray-600 text-sm mb-5 line-clamp-3">
+                    {data.description || data.color || "Various colors available"}
+                  </p>
+
+                  <button
+                    onClick={() => handleOrderNow(data)}
+                    className="inline-block bg-pink-600 hover:bg-pink-700 focus:ring-4 focus:ring-pink-300 focus:outline-none text-white font-semibold rounded-full px-6 py-2 transition-transform duration-300 hover:scale-105 shadow-lg"
+                  >
+                    Order Now
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p className="text-gray-500 text-center col-span-full">Loading products...</p>
+          )}
         </div>
       </div>
     </div>

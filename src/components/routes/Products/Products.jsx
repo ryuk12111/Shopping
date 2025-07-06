@@ -8,21 +8,20 @@ const Products = () => {
   const { addItemToCart } = useContext(CartContext);
   const [products, setProducts] = useState([]);
 
-useEffect(() => {
-  if (categoriesMap) {
-    const productIdsToSelect = [1, 2, 7]; // example IDs from any category
-    let combinedProducts = [];
+  useEffect(() => {
+    if (categoriesMap) {
+      const productIdsToSelect = [21, 2, 7, 17, 12]; // example IDs from any category
+      let combinedProducts = [];
 
-    Object.values(categoriesMap).forEach(productsArray => {
-      combinedProducts = combinedProducts.concat(
-        productsArray.filter(product => productIdsToSelect.includes(product.id))
-      );
-    });
+      Object.values(categoriesMap).forEach((productsArray) => {
+        combinedProducts = combinedProducts.concat(
+          productsArray.filter((product) => productIdsToSelect.includes(product.id))
+        );
+      });
 
-    setProducts(combinedProducts);
-  }
-}, [categoriesMap]);
-
+      setProducts(combinedProducts);
+    }
+  }, [categoriesMap]);
 
   const handleOrderNow = (product) => {
     addItemToCart(product);
@@ -45,7 +44,7 @@ useEffect(() => {
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-12 place-items-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-12 place-items-center">
           {products.map((data, idx) => (
             <div
               data-aos="fade-up"
@@ -53,16 +52,18 @@ useEffect(() => {
               key={data.id}
               className="flex flex-col items-center border border-gray-200 rounded-lg shadow-lg p-5 bg-white hover:shadow-xl transition-shadow duration-300 w-full max-w-[300px]"
             >
-              <img
-                src={data.imageUrl}
-                alt={data.name}
-                className="h-[250px] w-[220px] object-cover rounded-md mb-3"
-              />
+              <div className="flex justify-center items-center overflow-visible pt-6">
+                <img
+                  src={data.imageUrl}
+                  alt={data.name}
+                  className="max-w-[220px] max-h-[250px] object-contain rounded-md mb-3"
+                />
+              </div>
               <div className="text-center">
                 <h3 className="font-semibold text-lg text-gray-800">{data.name}</h3>
                 <p className="text-sm text-gray-500 mt-1">{data.color || "Various Colors"}</p>
-                <div className="flex items-center justify-center gap-1 mt-1">
-                  <FaStar className="text-yellow-400" />
+                <div className="flex items-center justify-center gap-1 mt-1 text-yellow-400">
+                  <FaStar />
                   <span className="font-semibold text-gray-700">{data.rating || 4.5}</span>
                 </div>
                 <button
@@ -74,6 +75,9 @@ useEffect(() => {
               </div>
             </div>
           ))}
+          {products.length === 0 && (
+            <p className="text-gray-500 col-span-full text-center">Loading products...</p>
+          )}
         </div>
       </div>
     </div>

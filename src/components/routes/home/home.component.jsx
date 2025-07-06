@@ -5,6 +5,7 @@ import {Outlet} from 'react-router-dom';
 import Hero from '../Hero/Hero';
 import TopProducts from "../TopProducts/TopProducts";
 import Products from "../Products/Products";
+import Banner from "../Banner/Banner";
 
 const Home = () => {
   const [orderPopup, setOrderPopup] = React.useState(false);
@@ -25,6 +26,7 @@ const Home = () => {
       <Hero handleOrderPopup={handleOrderPopup} />
       <Outlet />
       <Products/>
+      <Banner/>
       <TopProducts/>
 
     </div>
