@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
-export const BaseButton = styled.button`
+// Filter out the isLoading prop so it doesn't get passed to the <button> element
+const filterProps = (prop) => prop !== 'isLoading';
+
+export const BaseButton = styled.button.withConfig({
+  shouldForwardProp: filterProps,
+})`
   min-width: 165px;
   width: auto;
   height: 50px;
@@ -17,6 +22,10 @@ export const BaseButton = styled.button`
   cursor: pointer;
   display: flex;
   justify-content: center;
+
+  /* Visual feedback for loading state */
+  opacity: ${({ isLoading }) => (isLoading ? 0.6 : 1)};
+  pointer-events: ${({ isLoading }) => (isLoading ? 'none' : 'auto')};
 
   &:hover {
     background-color: white;

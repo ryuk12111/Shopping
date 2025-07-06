@@ -16,13 +16,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <UserProvider>
-        
           <CartProvider>
             <Elements stripe={stripePromise}>
             <App />
             </Elements>
           </CartProvider>
-        
       </UserProvider>
     </BrowserRouter>
   </React.StrictMode>
