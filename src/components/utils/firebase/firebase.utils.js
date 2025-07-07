@@ -1,6 +1,8 @@
 // firebase.utils.js
 
 import { initializeApp } from 'firebase/app';
+
+
 import {
   getAuth,
   signInWithRedirect,
@@ -20,6 +22,7 @@ import {
   writeBatch,
   query,
   getDocs,
+  addDoc,
 } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
@@ -139,3 +142,25 @@ export const signOutUser = async () => await signOut(auth);
 // Auth: Listen to user state changes
 export const onAuthStateChangedListener = (callback) =>
   onAuthStateChanged(auth, callback);
+
+
+/**
+ * Save contact message to Firestore
+ * @param {string} userId - Authenticated user's UID
+ * @param {object} messageData - { name, email, subject, message }
+ */
+export const saveContactMessage = async (userId, messageData) => {
+  try {
+    const messagesRef = collection(db, 'messages');
+    await addDoc(messagesRef, {
+      userId,
+      ...messageData,
+      createdAt: new Date(),
+    });
+    console.log('Message saved to Firestore');
+  } catch (error) {
+    console.error('Error saving message:', error);
+    throw error;
+  }
+};
+
