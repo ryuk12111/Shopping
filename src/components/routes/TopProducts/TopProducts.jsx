@@ -34,8 +34,7 @@ const TopProducts = ({ handleOrderPopup }) => {
             Best Products
           </h1>
           <p data-aos="fade-up" className="text-xs text-gray-500 mt-2">
-            Discover our selection of top-selling products carefully curated for you.
-          </p>
+Our most-loved products, all in one place for you to explore.          </p>
         </div>
 
         {/* Products Grid */}
@@ -60,7 +59,7 @@ const TopProducts = ({ handleOrderPopup }) => {
                 <div className="p-6 text-center">
                   {/* Star rating */}
                   <div className="flex justify-center gap-1 mb-3 text-yellow-400">
-                    {[...Array(5)].map((_, i) => (
+                    {[...Array(4)].map((_, i) => (
                       <FaStar key={i} />
                     ))}
                   </div>

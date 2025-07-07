@@ -7,30 +7,32 @@ export const BaseButton = styled.button.withConfig({
   shouldForwardProp: filterProps,
 })`
   min-width: 165px;
-  width: auto;
   height: 50px;
+  padding: 0 35px;
+  font-size: 15px;
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-weight: 700;
   letter-spacing: 0.5px;
   line-height: 50px;
-  padding: 0 35px 0 35px;
-  font-size: 15px;
-  background-color: black;
-  color: white;
   text-transform: uppercase;
-  font-family: 'Open Sans Condensed';
-  font-weight: bolder;
+  border-radius: 10px;
   border: none;
   cursor: pointer;
   display: flex;
   justify-content: center;
+  align-items: center;
+  background-color: #ff4d6d;
+  color: white;
+  transition: all 0.3s ease;
 
-  /* Visual feedback for loading state */
+  /* Loading state feedback */
   opacity: ${({ isLoading }) => (isLoading ? 0.6 : 1)};
   pointer-events: ${({ isLoading }) => (isLoading ? 'none' : 'auto')};
 
   &:hover {
-    background-color: white;
-    color: black;
-    border: 1px solid black;
+    background-color: #e03e5d;
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 77, 109, 0.6);
   }
 `;
 
@@ -40,18 +42,19 @@ export const GoogleSignInButton = styled(BaseButton)`
 
   &:hover {
     background-color: #357ae8;
-    border: none;
+    box-shadow: 0 4px 15px rgba(66, 133, 244, 0.6);
   }
 `;
 
 export const InvertedButton = styled(BaseButton)`
   background-color: white;
-  color: black;
-  border: 1px solid black;
+  color: #ff4d6d;
+  border: 2px solid #ff4d6d;
 
   &:hover {
-    background-color: black;
+    background-color: #ff4d6d;
     color: white;
     border: none;
+    box-shadow: 0 4px 15px rgba(255, 77, 109, 0.6);
   }
 `;
