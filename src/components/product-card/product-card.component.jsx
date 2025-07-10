@@ -22,7 +22,7 @@ const ProductCard = ({ product }) => {
       <ProductImage src={imageUrl} alt={name} />
       <ProductInfo>
         <ProductName>{name}</ProductName>
-        <ProductPrice>${price.toFixed(2)}</ProductPrice>
+        <ProductPrice>Rs. {price.toFixed(2)}</ProductPrice>
       </ProductInfo>
       <AddButton
         buttonType={BUTTON_TYPE_CLASSES.base}

@@ -24,8 +24,6 @@ const TopProducts = ({ handleOrderPopup }) => {
     <div className="py-16 ">
       <div className="container mx-auto px-6">
         {/* Header section */}
-
-
         <div className="text-center mb-10 max-w-[600px] mx-auto">
           <p data-aos="fade-up" className="text-sm text-primary font-semibold">
             Top Rated Products for you
@@ -34,13 +32,14 @@ const TopProducts = ({ handleOrderPopup }) => {
             Best Products
           </h1>
           <p data-aos="fade-up" className="text-xs text-gray-500 mt-2">
-Our most-loved products, all in one place for you to explore.          </p>
+            Our most-loved products, all in one place for you to explore.
+          </p>
         </div>
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 place-items-center">
           {products.length ? (
-            products.map((data, idx) => (
+            products.map((data) => (
               <div
                 key={data.id}
                 data-aos="zoom-in"
@@ -68,8 +67,8 @@ Our most-loved products, all in one place for you to explore.          </p>
                     {data.name}
                   </h2>
 
-                  <p className="text-gray-600 text-sm mb-5 line-clamp-3">
-                    {data.description || data.color || "Various colors available"}
+                  <p className="text-gray-600 text-sm mb-5">
+                    Rs. {data.price?.toFixed(2)}
                   </p>
 
                   <button

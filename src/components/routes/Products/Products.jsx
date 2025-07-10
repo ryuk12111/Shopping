@@ -61,10 +61,14 @@ const Products = () => {
               </div>
               <div className="text-center">
                 <h3 className="font-semibold text-lg text-gray-800">{data.name}</h3>
-                <p className="text-sm text-gray-500 mt-1">{data.color || "Various Colors"}</p>
+                <p className="text-sm text-gray-700 mt-1 font-semibold">
+                  Rs. {data.price}
+                </p>
                 <div className="flex items-center justify-center gap-1 mt-1 text-yellow-400">
                   <FaStar />
-                  <span className="font-semibold text-gray-700">{data.rating || 4.5}</span>
+                  <span className="font-semibold text-gray-700">
+                    {data.rating || 4.5}
+                  </span>
                 </div>
                 <button
                   onClick={() => handleOrderNow(data)}
