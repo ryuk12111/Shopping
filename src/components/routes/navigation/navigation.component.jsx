@@ -8,7 +8,7 @@ import CartIcon from '../../cart-icon/cart-icon.component';
 import CartDropdown from '../../cart-dropdown/cart-dropdown.component';
 
 import Footer from '../Footer/Footer';
-import crownIcon from '../../../assets/crown.svg';
+import crownIcon from '../Footer/logo.png'
 import { signOutUser } from '../../utils/firebase/firebase.utils';
 
 import { FaBars, FaTimes } from 'react-icons/fa';

@@ -104,8 +104,7 @@ const Footer = () => {
                 urStyleClothing
               </h1>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum in
-              </p>
+Affordable fashion designed for you, anytime, anywhere.              </p>
             </div>
 
             {/* Footer Links */}
